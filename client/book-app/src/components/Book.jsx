@@ -1,14 +1,12 @@
-import * as projects from '../assets'
+import * as books from '../assets'
 
 function Book({ book }) {
     const { bookName, bookAuthor, reactions } = book;
-    //user comments
-  
     return (
       
       <div className="p-3">
         <img
-          src={projects[image]}
+          src={books[image]}
           alt={bookName}
           className="p-img"
         />
@@ -16,7 +14,11 @@ function Book({ book }) {
           <h1>
             <a> {bookName}</a>{' '}
           </h1>
-          <p>"by" {bookAuthor}</p>
+          <p>By: {bookAuthor}</p>
+          <div>
+            <h2>Reactions:</h2>
+            <ul>{reactions.map(reaction => ( <li key={reaction.reactionId}>{reaction.username}: {reaction.reactionBody} {reaction.rating}</li>))}</ul>
+        </div>
         </div>
       </div>
     );
