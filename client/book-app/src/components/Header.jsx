@@ -1,15 +1,15 @@
+import { Link } from "react-router-dom";
 function Header() {
     return (
     <header>
     <h1>Book App</h1>
     <nav className="menu">
-        <a href="#UserAuth" className="headerText">New User Signup</a>
-        <a href="#UserAuth" className="headerText">Existing User Login</a>
-        <a href="#MyList" className="headerText">My List</a>
-        <a href="#UpdateList" className="headerText">Add To List</a>
+        <Link to="/UserAuth" className="headerText">New User Signup</Link>
+        <Link to="/UserAuth" className="headerText">Existing User Login</Link>
+        <Link to="/MyList" className="headerText">My List</Link>
+        <Link to="/UpdateList" className="headerText">Add To List</Link>
     </nav>
     </header>
     );
   }
-  
   export default Header;
