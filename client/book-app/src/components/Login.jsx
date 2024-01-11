@@ -8,6 +8,8 @@ export default function Login() {
     function handleSubmit(event){
         event.preventDefault();
     }
+    //usestate to see if logged in **Add
+    //if not logged in, displays signup form. If logged in, displays log in form. ** Add
     return(
         <div className="Login">
         <Form onSubmit={handleSubmit}>

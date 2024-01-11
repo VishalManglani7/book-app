@@ -2,10 +2,9 @@ import * as projects from '../assets'
 
 function Book({ book }) {
     const { bookName, bookAuthor, reactions } = book;
-    //user comments
   
     return (
-      
+      <section>
       <div className="p-3">
         <img
           src={projects[image]}
@@ -19,6 +18,15 @@ function Book({ book }) {
           <p>"by" {bookAuthor}</p>
         </div>
       </div>
+      <div className="d-flex">
+            <h3>Reactions: </h3>
+            <div>
+            {reactions.map((reaction)=> (
+                <Reaction reaction={reaction} key={"reaction-" + reaction.reactionBody} />
+            ))}
+            </div>
+        </div>
+      </section>
     );
   }
   
