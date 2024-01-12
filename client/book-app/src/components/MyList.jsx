@@ -26,3 +26,29 @@ function Library() {
 }
 
 export default Library;
+
+
+
+
+//please look at this after looking at update list. I think something as simple as this should do the trick here:
+
+// import React from 'react';
+// import Book from './Book';
+
+// function Library({ bookList }) {
+//   return (
+//     <div>
+//       <div className="d-flex">
+//         {bookList.length === 0 ? (
+//           <p>Add books to your library on the Update List Page!</p>
+//         ) : (
+//           bookList.map((book, index) => (
+//             <Book book={book} key={`book-${index}`} />
+//           ))
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Library;
