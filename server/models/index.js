@@ -1,4 +1,4 @@
-const Tech = require('./Book');
-const Matchup = require('./User');
+const Book = require('./Book');
+const User = require('./User');
 
 module.exports = { Book, User };

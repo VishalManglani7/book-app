@@ -13,10 +13,11 @@ function Library() {
   return (
     <div>
       <div className="d-flex">
+        {/* need ternary operator */}
         {/* if projects is empty -> "Add to your library"
         else : function that maps out the books added */}
 
-        {books.map((Book) => (
+        {books.map((book) => (
           <Book book={book} key={"book-" + book.name} />
         ))}
       </div>
