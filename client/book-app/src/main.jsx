@@ -7,12 +7,13 @@ import App from "./App";
 import MyList from "./components/MyList";
 import UpdateList from "./components/UpdateList";
 import "./index.css";
+import Error from './components/ErrorPage';
 // Define the accessible routes, and which components respond to which URL
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // errorElement: <Error />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
