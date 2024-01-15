@@ -4,15 +4,32 @@
 //use state starting with empty input
 //use 
 import { useState } from 'react';
+import MyList from "./MyList";
+
 export default function UpdateList() {
     const [formState, setFormState] = useState({
         bookName: '',
         bookAuthor:'',
     });
+
+  const [bookName, setBookName] = useState("");
+  const [bookAuthor, setBookAuthor] = useState("");
+  const [bookList, setBookList] = useState([MyList]);       
+
     const [errorMessage, setErrorMessage] = useState('');
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!errorMessage){
+          const newBook = {
+                  bookName: bookName,
+                  authorName: authorName,
+                };
+
+    setBookList((prevList) => [...prevList, newBook]);      
+
+    setBookName("");
+    setAuthorName("");         
+                
             console.log('Add book to your library!', formState);
         }
     };
@@ -23,7 +40,7 @@ export default function UpdateList() {
         <label htmlFor="bookName">Title:</label>
         <input
           type="text"
-          placeholder="Enter book mtitle"
+          placeholder="Enter book title"
           value={bookName}
           name="bookName"
           className="update-input"
@@ -38,17 +55,8 @@ export default function UpdateList() {
           className="update-input"
           onChange={handleChange} 
         ></input>
-        <label htmlFor="message">Name:</label>
-         <input
-          type="text"
-          placeholder="Enter your message: (must be 1-500 characters long)"
-          value={message}
-          name="message"
-          className="contact-input"
-          onChange={handleChange} 
-        ></input>
     </div>
-        <button type="submit" className="update-button">Add</button>
+        <button type="submit" className="update-button">Add Book</button>
       </form>
       </div>
   
