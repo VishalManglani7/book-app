@@ -3,8 +3,7 @@ const typeDefs = `
     _id: ID
     username: String
     password: String
-    studentCount: Int
-    classes: [Class]
+    bookList: [Book]
   }
 
   type Book {
@@ -22,10 +21,22 @@ const typeDefs = `
     createdAt: Date
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
   type Query {
     users: [User]
+    user(username: String!): User
     books: [Book]
+    bookbyId(_id: ID!) : Book
     reactions: [Reaction]
+  }
+
+  type Mutation { 
+    addUser(username: String!, email: String!, password: String!): Auth 
+    login(email: String!, password: String!) : Auth
+    addReaction (reactionBody: String!, rating: Int!, createdAt: Date!) : Reaction 
   }
 `;
 
