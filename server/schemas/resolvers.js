@@ -5,15 +5,15 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
     Query: {
-        //all users
-        user: async () => {
-            return User.find().populate("booksRead");
-          },
+        //removing all users
+        // user: async () => {
+        //     return User.find().populate("booksRead");
+        //   },
 
-          // single user
-        userbyUsername: async (parent, { username }) => {
-            return User.findOne({ username }).populate("booksRead");
-          },
+          // single user also removing this.
+        // userbyUsername: async (parent, { username }) => {
+        //     return User.findOne({ username }).populate("booksRead");
+        //   },
          
          
           //I believe this should work to authenticate a single user who is signed on
@@ -62,17 +62,15 @@ const resolvers = {
             //mutation to add a reaction
             //starting to consider removing the reactionBody with emojis for now
             //coded best I could as if it is there tho
-            addReaction: async (parent, { reactionBody, rating, createdAt}, context) => {
+            addReaction: async (parent, { bookID, reactionBody, rating}, context) => {
                 if (context.user) {
-                  const reaction = await Reaction.create({
-                    reactionBody,
-                    rating,
-                    createdAt,
+                  const book = await Book.findOneAndUpdate({_id:bookID},{
+                    $push:{reactions:{reactionBody, rating}}
                   });
           
-                  await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { reaction: reaction._id } });
+                  // await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { reaction: reaction._id } });
           
-                  return reaction;
+                  return book;
                 }
                 throw AuthenticationError;
               }}}
