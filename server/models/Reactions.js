@@ -1,8 +1,8 @@
 const { Schema, Types } = require('mongoose');
 
-// regex for emojireaction
-const thumbsUpRegex = /👍/;
-const thumbsDownRegex = /👎/;
+// // regex for emojireaction
+// const thumbsUpRegex = /👍/;
+// const thumbsDownRegex = /👎/;
 
 const reactionSchema = new Schema(
   {
@@ -13,12 +13,12 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String, 
       required: true,
-      validate: {
-        validator: function (value) {
-            return thumbsUpRegex.test(value) || thumbsDownRegex.test(value);
-              },
-        message: 'Invalid emoji input.',
-      }
+      // validate: {
+      //   validator: function (value) {
+      //       return thumbsUpRegex.test(value) || thumbsDownRegex.test(value);
+      //         },
+      //   message: 'Invalid emoji input.',
+      // }
     },
     rating:{
         type: Number,

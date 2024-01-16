@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bookSchema = require('./Book');
+const Book = require('./Book');
 const reactionSchema = require('./Reactions');
 const bcrypt = require('bcrypt');
 // Schema to create username model
@@ -23,8 +23,7 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    booksRead: [bookSchema],
-    reactions: [reactionSchema],
+    booksRead: [Book.schema],
   },
   {
     toJSON: {

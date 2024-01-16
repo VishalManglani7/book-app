@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const reactionSchema = require("./reaction");
+const reactionSchema = require("./Reactions");
 
 // Schema to create a book model
 const bookSchema = new Schema(
@@ -21,10 +21,7 @@ const bookSchema = new Schema(
     //   type: String,
     //   required: true,
     // },
-    reactions: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Reaction'
-    }],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -33,6 +30,6 @@ const bookSchema = new Schema(
   }
 );
 
-const Book = model("Book", bookSchema);
+const Book = model("Book",bookSchema)
 
-module.exports = Book;
+module.exports = Book
