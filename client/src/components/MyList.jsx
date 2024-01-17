@@ -1,20 +1,15 @@
-import {useQuery} from '@apollo/client';
-import {ME} from '../utils/queries';
-const Library = () => {
-  const {loading, data} = useQuery(ME);
-  const books = data?.booksRead || [];
-  const bookList = ({bookName, bookAuthor, reactions})
-return (
-  // <main>
-  //   {loading ? (
-  //           <div>Loading...</div>
-  //         ) : (
-  //           <div>
-  //             {books && books.map((book)=>(
+import React from "react";
+import Book from "./Book"; // Assuming you have a Book component
 
-  //             )}
-  //           </div>
-          
-  //           )}
-  // </main>
-)}
+function MyList({ books }) {
+  return (
+    <div>
+      <div className="d-flex">
+        {Array.isArray(books) &&
+          books.map((book) => <Book book={book} key={"book-" + book._id} />)}
+      </div>
+    </div>
+  );
+}
+
+export default MyList;

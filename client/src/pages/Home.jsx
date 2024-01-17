@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Fragment } from 'react';
 // import Header from '../components/Header';
-// import MyList from '../components/MyList';
+import MyList from '../components/MyList';
 import UpdateList from '../components/UpdateList';
 
 // import {QUERY }
@@ -13,7 +13,7 @@ console.log('Displaying Home Page');
         
         <Fragment>
             <p> Testing! </p>
-            {/* <MyList/> */}
+            <MyList/>
             <UpdateList/>
         </Fragment>
     )
