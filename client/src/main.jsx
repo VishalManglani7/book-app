@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import "react-bootstrap";
 import App from "./App";
-// import Login from './components/';
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+
 import "./index.css";
 // import Error from './components/ErrorPage';
 // Define the accessible routes, and which components respond to which URL
@@ -14,20 +14,19 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Error />,
+    // errorElement: <Error />,
     children: [
       {
         index: true,
-        path: "/login",
-        element: <Login />,
+        element: <Home />,
       },
       {
         path: "/signup",
         element: <Signup />,
       },
       {
-        path: "/home",
-        element: <Home />,
+        path: "/login",
+        element: <Login />,
       },
     ],
   },

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import {Navbar} from "react-bootstrap";
+// import { Link } from "react-router-dom";
+// import {Navbar} from "react-bootstrap";
 function Header() {
     return (
     <header>
     <h1>Book App</h1>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <NavLink className="navbar-brand" to="/#">
         Navbar
       </NavLink>
@@ -41,11 +41,9 @@ function Header() {
             </div>
           </nav>
     <nav className="menu">
-        <Link to="/UserAuth" className="headerText">New User Signup</Link>
-        <Link to="/UserAuth" className="headerText">Existing User Login</Link>
-        <Link to="/MyList" className="headerText">My List</Link>
-        <Link to="/UpdateList" className="headerText">Add To List</Link>
-    </nav>
+        <Link to="/signup" className="headerText">New User Signup</Link>
+        <Link to="/login" className="headerText">Existing User Login</Link>
+    </nav> */}
     </header>
     );
   }
