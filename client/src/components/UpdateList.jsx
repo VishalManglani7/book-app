@@ -1,55 +1,59 @@
-//form similar to contact me from react portfolio project
-// can do this as a form and add to books array that gets mapped
-//User enters bookname/authorname and submits. Then pushed to array in Book.jsx and mapped to MyList.jsx
-//use state starting with empty input
-//use 
 import { useMutation } from '@apollo/client';
 import { ADDBOOK } from '../utils/mutations';
 import { useState } from 'react';
-// import MyList from "./MyList";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-export default function UpdateList() {
 
-    const [formState, setFormState] = useState({
-        bookName: '',
-        bookAuthor:'',
-        reaction: ''
-    });
-    const [update, { error, newBook}] = useMutation(ADDBOOK);
+const UpdateList = () => {
+  const [formState, setFormState] = useState({
+    bookName: '',
+    bookAuthor: '',
+    reaction: [""]
+  });
 
-
-  // const [bookList, setBookList] = useState([MyList]);       
-//issue is above with mylist
-    // const [errorMessage, setErrorMessage] = useState('');
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-  
-      setFormState({
-        ...formState,
-        [name]: value,
-      });
-    };
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!errorMessage){
-          const {newBook} = await update({variables: {...formState},});;
-          // {
-          //         bookName: bookName,
-          //         authorName: authorName,
-          //         reactions: [reaction]
-          //       };
-
-      //  setBookList((prevList) => [...prevList, newBook]);      
-
-      setFormState("");      
-      
-            console.log('Add book to your library!', formState);
+  const [addBook, { error }] = useMutation(ADDBOOK, {
+    update(cache, { data: { addBook } }) {
+      cache.modify({
+        fields: {
+          me(existingBooks = []) {
+            return {
+              ...existingBooks,
+              booksRead: [...existingBooks.booksRead, addBook]
+            };
+          }
         }
-        
-    };
-    return (
-      <Form onSubmit={handleSubmit}>
+      });
+    }
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await addBook({
+        variables: { ...formState },
+      });
+
+      // Assuming that your mutation returns the newly added book
+      const newBook = data.addBook;
+
+      console.log('Add book to your library!', newBook);
+    } catch (error) {
+      console.error('Error adding book:', error);
+    }
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
       <Form.Group size="lg" controlId="bookName">
         <Form.Label>Book Name</Form.Label>
         <Form.Control
@@ -78,8 +82,11 @@ export default function UpdateList() {
           onChange={handleChange}
         />
       </Form.Group>
-      <Button block size="lg" type="submit" style={{cursor:'pointer'}}>
+      <Button block size="lg" type="submit" style={{ cursor: 'pointer' }}>
         Add
       </Button>
     </Form>
-    )}
+  );
+};
+
+export default UpdateList;
