@@ -3,110 +3,83 @@
 //User enters bookname/authorname and submits. Then pushed to array in Book.jsx and mapped to MyList.jsx
 //use state starting with empty input
 //use 
+import { useMutation } from '@apollo/client';
+import { ADDBOOK } from '../utils/mutations';
 import { useState } from 'react';
-import MyList from "./MyList";
-
+// import MyList from "./MyList";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 export default function UpdateList() {
+
     const [formState, setFormState] = useState({
         bookName: '',
         bookAuthor:'',
+        reaction: ''
     });
+    const [update, { error, newBook}] = useMutation(ADDBOOK);
 
-  const [bookName, setBookName] = useState("");
-  const [bookAuthor, setBookAuthor] = useState("");
-  const [bookList, setBookList] = useState([MyList]);       
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const handleSubmit = (event) => {
+  // const [bookList, setBookList] = useState([MyList]);       
+//issue is above with mylist
+    // const [errorMessage, setErrorMessage] = useState('');
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+  
+      setFormState({
+        ...formState,
+        [name]: value,
+      });
+    };
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (!errorMessage){
-          const newBook = {
-                  bookName: bookName,
-                  authorName: authorName,
-                };
+          const {newBook} = await update({variables: {...formState},});;
+          // {
+          //         bookName: bookName,
+          //         authorName: authorName,
+          //         reactions: [reaction]
+          //       };
 
-    setBookList((prevList) => [...prevList, newBook]);      
+      //  setBookList((prevList) => [...prevList, newBook]);      
 
-    setBookName("");
-    setAuthorName("");         
-                
+      setFormState("");      
+      
             console.log('Add book to your library!', formState);
         }
+        
     };
-    <div>
-    <h2>Please reach out to me using the form below. I always respond in a timely manner. </h2>
-      <form className="update-form" onSubmit={handleSubmit}>
-        <div>
-        <label htmlFor="bookName">Title:</label>
-        <input
+    return (
+      <Form onSubmit={handleSubmit}>
+      <Form.Group size="lg" controlId="bookName">
+        <Form.Label>Book Name</Form.Label>
+        <Form.Control
+          autoFocus
           type="text"
-          placeholder="Enter book title"
-          value={bookName}
           name="bookName"
-          className="update-input"
-          onChange={handleChange} 
-        ></input>
-        <label htmlFor="bookAuthor">Author:</label>
-        <input
+          value={formState.bookName}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group size="lg" controlId="bookAuthor">
+        <Form.Label>Author</Form.Label>
+        <Form.Control
           type="text"
-          placeholder="Enter Author's name:"
-          value={bookAuthor}
           name="bookAuthor"
-          className="update-input"
-          onChange={handleChange} 
-        ></input>
-    </div>
-        <button type="submit" className="update-button">Add Book</button>
-      </form>
-      </div>
-  
-}
-
-//Mallory take a look at code below, wasnt sure where to pick up on above but tried to code this out in what I thought might work.
-//feel free to pick and choose/let me know where you were at and we can put this page together
-
-
-
-// import { useState } from 'react';
-// //importing from my list to push the book to my list? lmk if this makes sense!
-// import MyList from "./MyList";
-
-// export default function UpdateList() {
-//   const [bookName, setBookName] = useState("");
-//   const [authorName, setAuthorName] = useState("");
-//   const [bookList, setBookList] = useState([]);       <- did some research and it looks like this [] grabs the previous array instead of making it blank, so we add to it
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-
-//     const newBook = {
-//       bookName: bookName,
-//       authorName: authorName,
-//     };
-
-    
-//     setBookList((prevList) => [...prevList, newBook]);      <- this would take our previous list and add the newbook
-
-//     setBookName("");
-//     setAuthorName("");         <-set names in form blank (not sure if this is covered when you useState, usestate above? but I think this is seperate for the form)
-//   }};
-
-//   return (
-//     <div className="UpdateList">
-//       <form onSubmit={handleSubmit}>
-//         <label htmlFor="bookName">Book Name</label>
-//         <input
-//           type="text"
-//           id="bookName"
-//           value={bookName}
-//           onChange={(event) => setBookName(event.target.value)}/>
-//                 <label htmlFor="authorName">Author Name</label>
-//         <input
-//           type="text"
-//           id="authorName"
-//           value={authorName}
-//           onChange={(event) => setAuthorName(event.target.value)}/>
-
-//         <button type="submit">Add Book</button>
-//       </form>
-
+          value={formState.bookAuthor}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group size="lg" controlId="reaction">
+        <Form.Label>Reaction</Form.Label>
+        <Form.Control
+          type="text"
+          name="reaction"
+          value={formState.reaction}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Button block size="lg" type="submit" style={{cursor:'pointer'}}>
+        Add
+      </Button>
+    </Form>
+    )}
