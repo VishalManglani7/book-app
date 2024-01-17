@@ -1,5 +1,5 @@
 import React from "react";
-import Book from "./Book"; // Assuming you have a Book component
+import Book from "./Book"; 
 
 function MyList({ books }) {
   return (
