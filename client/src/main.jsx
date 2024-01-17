@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import "react-bootstrap";
 import App from "./App";
-import Home from "./pages/Home"
-import Login from "./pages/Login"
-import Signup from "./pages/Signup"
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 import "./index.css";
 // import Error from './components/ErrorPage';
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // errorElement: <Error />,
+    // errorElement: <ErrorPage />,
     children: [
       {
         index: true,

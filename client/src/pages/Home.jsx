@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import MyList from '../components/MyList';
 import UpdateList from '../components/UpdateList';
 
-export default function Home() {
+function Home() {
   return (
     <Fragment>
       <p> Testing! </p>
@@ -11,3 +11,5 @@ export default function Home() {
     </Fragment>
   );
 }
+
+export default Home;

@@ -27,15 +27,15 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+
 import Header from "./components/Header"
+
 function App() {
     return (
       <ApolloProvider client={client}>
-        <div className="flex-column justify-flex-start min-100-vh">
+       <div className="main">
           <Header />
-          <div className="container">
-            {<Outlet />}
-          </div>
+          <Outlet />
         </div>
       </ApolloProvider>
     );
