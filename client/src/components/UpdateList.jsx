@@ -43,7 +43,6 @@ const UpdateList = () => {
         variables: { ...formState },
       });
 
-      // Assuming that your mutation returns the newly added book
       const newBook = data.addBook;
 
       console.log('Add book to your library!', newBook);
