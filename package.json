@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrent": "^0.3.2"
+    "concurrent": "^5.3.0"
+
   }
 }
