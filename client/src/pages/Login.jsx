@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import Button from '@mui/material/Button';
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: ''});
   const [logon, { error, data}] = useMutation(LOGIN);
@@ -55,7 +55,7 @@ const Login = (props) => {
           onChange={handleChange}
         />
       </Form.Group>
-      <Button block size="lg" type="submit" style={{cursor:'pointer'}}>
+      <Button variant ="contained" type="submit">
         Login
       </Button>
     </Form>
