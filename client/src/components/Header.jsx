@@ -4,8 +4,8 @@ function Header() {
     return (
     <header>
     <h1>Book App</h1>
-    <nav className="menu">
-        <Link to="/" className="headerText">Home</Link>
+    <nav className="dropdown">
+    <Link to="/" className="headerText">Home</Link>
         <Link to="/signup" className="headerText">SignUp</Link>
         <Link to="/login" className="headerText">Login</Link>
     </nav>

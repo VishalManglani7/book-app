@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import Button from '@mui/material/Button';
 import Auth from '../utils/auth';
 
 const Signup = () => {
@@ -70,7 +70,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                     </Form.Group>
-                    <Button block size="lg" type="submit" style={{cursor:'pointer'}}>
+                    <Button variant="contained" type="submit" >
                       Sign Up
                     </Button>
                   </Form>
