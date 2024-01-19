@@ -1,29 +1,34 @@
-import { useMutation } from '@apollo/client';
-import { ADDBOOK } from '../utils/mutations';
-import { useState } from 'react';
+import { useMutation } from "@apollo/client";
+import { ADDBOOK } from "../utils/mutations";
+import { useState } from "react";
+import Auth from "../utils/auth";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const UpdateList = () => {
   const [formState, setFormState] = useState({
-    bookName: '',
-    bookAuthor: '',
-    reaction: [""]
+    bookName: "",
+    bookAuthor: "",
   });
 
+
   const [addBook, { error }] = useMutation(ADDBOOK, {
-    update(cache, { data: { addBook } }) {
-      cache.modify({
-        fields: {
-          me(existingBooks = []) {
-            return {
-              ...existingBooks,
-              booksRead: [...existingBooks.booksRead, addBook]
-            };
-          }
-        }
-      });
-    }
+    update: (cache, { data }) => {
+      if (Auth.loggedIn()) {
+        cache.modify({
+          id: cache.identify({
+            __typename: "User",
+            id: Auth.getProfile().data._id,
+          }),
+          fields: {
+            booksRead: (previous, { toReference }) => [
+              ...previous,
+              toReference(data.addBook),
+            ],
+          },
+        });
+      }
+    },
   });
 
   const handleChange = (event) => {
@@ -40,51 +45,54 @@ const UpdateList = () => {
 
     try {
       const { data } = await addBook({
-        variables: { ...formState },
+        variables: { ...formState, userid: Auth.getProfile().data._id },
       });
 
       const newBook = data.addBook;
 
-      console.log('Add book to your library!', newBook);
+      console.log("Add book to your library!", newBook);
     } catch (error) {
-      console.error('Error adding book:', error);
+      console.error("Error adding book:", error);
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group size="lg" controlId="bookName">
-        <Form.Label>Book Name</Form.Label>
-        <Form.Control
-          autoFocus
-          type="text"
-          name="bookName"
-          value={formState.bookName}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group size="lg" controlId="bookAuthor">
-        <Form.Label>Author</Form.Label>
-        <Form.Control
-          type="text"
-          name="bookAuthor"
-          value={formState.bookAuthor}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group size="lg" controlId="reaction">
-        <Form.Label>Reaction</Form.Label>
-        <Form.Control
-          type="text"
-          name="reaction"
-          value={formState.reaction}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Button block size="lg" type="submit" style={{ cursor: 'pointer' }}>
-        Add
-      </Button>
-    </Form>
+    <>
+      {!Auth.loggedIn() && window.location.replace("/login")}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group size="lg" controlId="bookName">
+          <Form.Label>Book Name</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            name="bookName"
+            value={formState.bookName}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group size="lg" controlId="bookAuthor">
+          <Form.Label>Author</Form.Label>
+          <Form.Control
+            type="text"
+            name="bookAuthor"
+            value={formState.bookAuthor}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {/* <Form.Group size="lg" controlId="reaction">
+          <Form.Label>Reaction</Form.Label>
+          <Form.Control
+            type="text"
+            name="reaction"
+            value={formState.reaction}
+            onChange={handleChange}
+          />
+        </Form.Group> */}
+        <Button block size="lg" type="submit" style={{ cursor: "pointer" }}>
+          Add
+        </Button>
+      </Form>
+    </>
   );
 };
 
